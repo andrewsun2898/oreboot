@@ -109,15 +109,16 @@ _start16bit:
 	 * RAM stage. In practise: CPU will shutdown on any exception.
 	 * See IA32 manual Vol 3A 19.26 Interrupts.
 	 */
-
-	movw	%cs, %ax
-	shlw	$4, %ax
-	movw	$0xffe8, %bx
-	subw	%ax, %bx
-	lidt	%cs:(%bx)
-	movw	$0xffc8, %bx
-	subw	%ax, %bx
-	lgdtl	%cs:(%bx)
+/*
+*	movw	%cs, %ax
+*	shlw	$4, %ax
+*	movw	$0xffe8, %bx
+*	subw	%ax, %bx
+*	lidt	%cs:(%bx)
+	*/
+	
+	movl	$0xffc8, %ebx
+	lgdtl	%cs:(%ebx)
 
 	movl	%cr0, %eax
 	andl	$0x7FFAFFD1, %eax /* PG,AM,WP,NE,TS,EM,MP = 0 */
